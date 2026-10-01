@@ -1,0 +1,71 @@
+<%= form_with model: item, class: "space-y-5 max-w-2xl" do |f| %>
+  <% if item.errors.any? %>
+    <div class="bg-zinc-800 text-zinc-300 px-4 py-3 rounded-md text-sm">
+      <ul class="space-y-1">
+        <% item.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, "Título", class: "block text-xs text-zinc-400 mb-1.5" %>
+    <%= f.text_field :title, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :item_type, "Tipo", class: "block text-xs text-zinc-400 mb-1.5" %>
+      <%= f.select :item_type, [["Mangá", "manga"], ["HQ", "hq"], ["Livro", "livro"]], {}, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+    </div>
+    <div>
+      <%= f.label :status, "Status", class: "block text-xs text-zinc-400 mb-1.5" %>
+      <%= f.select :status, [["Quero Ler", "quero_ler"], ["Lendo", "lendo"], ["Lido", "lido"]], {}, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+    </div>
+  </div>
+
+  <div>
+  <%= f.label :collection_id, "Coleção", class: "block text-xs text-zinc-400 mb-1.5" %>
+  <%= f.select :collection_id, current_user.collections.map { |c| [c.title, c.id] }, { include_blank: "Nenhuma" }, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+</div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :author, "Autor", class: "block text-xs text-zinc-400 mb-1.5" %>
+      <%= f.text_field :author, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+    </div>
+    <div>
+      <%= f.label :publisher, "Editora", class: "block text-xs text-zinc-400 mb-1.5" %>
+      <%= f.text_field :publisher, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :year, "Ano", class: "block text-xs text-zinc-400 mb-1.5" %>
+      <%= f.number_field :year, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+    </div>
+    <div>
+      <%= f.label :rating, "Nota (1-5)", class: "block text-xs text-zinc-400 mb-1.5" %>
+      <%= f.select :rating, (1..5).map { |n| [n, n] }, { include_blank: "Sem nota" }, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :purchase_link, "Link de compra", class: "block text-xs text-zinc-400 mb-1.5" %>
+    <%= f.url_field :purchase_link, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+  </div>
+
+  <div>
+    <%= f.label :cover_url, "URL da capa", class: "block text-xs text-zinc-400 mb-1.5" %>
+    <%= f.url_field :cover_url, placeholder: "https://...", class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+  </div>
+
+  <div>
+    <%= f.label :review, "Resenha", class: "block text-xs text-zinc-400 mb-1.5" %>
+    <%= f.rich_text_area :review, class: "w-full bg-zinc-900 border border-zinc-800 rounded-md px-3 py-2 text-zinc-100 text-sm focus:outline-none focus:border-zinc-500 transition" %>
+  </div>
+
+  <%= f.submit "Salvar", class: "bg-zinc-100 hover:bg-zinc-300 text-zinc-900 text-sm px-5 py-2 rounded-md transition font-medium cursor-pointer" %>
+<% end %>
